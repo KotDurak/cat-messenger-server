@@ -1,0 +1,72 @@
+{
+  "info": {
+    "_postman_id": "45890f72-2a5e-4edb-816c-22c75e754baa",
+    "name": "cat-messenger",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Singnup",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"email\": \"tigr@sk.ru\",\r\n    \"password\":\"123456\",\r\n    \"birth_day\":\"1989-10-05\",\r\n    \"nick\":\"kot_durak\",\r\n    \"gender\":1\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{host}}:3001/auth/signup",
+          "host": [
+            "{{host}}"
+          ],
+          "port": "3001",
+          "path": [
+            "auth",
+            "signup"
+          ],
+          "query": [
+            {
+              "key": "",
+              "value": "",
+              "disabled": true
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Login",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"username\":\"kot_durak\",\r\n    \"password\":\"123456\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{host}}:3001/auth/login",
+          "host": [
+            "{{host}}"
+          ],
+          "port": "3001",
+          "path": [
+            "auth",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

@@ -15,7 +15,7 @@ const User = mongoose.model(
             required: true,
         },
         nick: {
-            type: [String, Number],
+            type: String,
             min:2,
             max:100,
             required: true,
@@ -32,10 +32,10 @@ const User = mongoose.model(
             type: Number,
             default: 0,
         },
-        roles: {
+        roles: [{
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Role'
-        }
+        }]
     })
 )
 

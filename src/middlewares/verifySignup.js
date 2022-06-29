@@ -3,19 +3,21 @@ const ROLES = db.ROLES
 const User = db.user
 
 checkDuplicateNickOrNick = (req, res, next) => {
-    User.findOne({$or:[{email: req.body.email},{nick: req.body.nick}]})
-    exec((err, user) => {
+
+    User.findOne({
+        $or: [{nick: req.body.name}, {email: req.body.email}]
+    }).exec((err, user) => {
         if (err) {
-            res.status(500).send({ message: err })
+            res.status(500).send({ message: err });
+            return;
+        }
+        if (user) {
+            res.status(400).send({ message: "Failed! Username is already in use!" });
             return
         }
 
-        if (user) {
-            res.status(400).send('Email or nick  already exists')
-        }
-
         next()
-    })
+    });
 }
 
 checkRolesExisted = (req, res, next) => {
@@ -30,6 +32,8 @@ checkRolesExisted = (req, res, next) => {
             }
         }
     }
+
+    next()
 }
 
 const verifySignup = {
