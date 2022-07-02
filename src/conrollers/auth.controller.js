@@ -84,3 +84,30 @@ exports.signin = (req, res) => {
             })
         })
 }
+
+exports.autlogin = async (req, res) => {
+    if (!req.body.id) {
+        res.status(400).send('Empty id')
+    }
+
+    const user = await User.findById(req.body.id).select({
+        _id:1,
+        nick:1,
+        email:1
+    })
+
+    user.status = 1;
+    user.save(err => {
+        if (err) {
+            res.status(500).send({message: 'Internal error'})
+        }
+        console.log(user)
+        res.send({
+            message: 'ok',
+            user: user
+        })
+
+    })
+
+
+}

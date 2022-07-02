@@ -1,6 +1,6 @@
 const express = require('express')
 const authRouter = express();
-const {verifySignup} = require('../middlewares')
+const {verifySignup, authJwt} = require('../middlewares')
 const controller = require('../conrollers/auth.controller')
 
 authRouter.use((req, res, next) => {
@@ -20,6 +20,8 @@ authRouter.post('/login', controller.signin)
 authRouter.post('/logout', (req, res) => {
     res.send({message: 'logout'})
 });
+
+authRouter.post('/autologin', [authJwt.verifyToken], controller.autlogin)
 
 authRouter.post('/signup',
     [verifySignup.checkDuplicateNickOrNick, verifySignup.checkRolesExisted],

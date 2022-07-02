@@ -1,16 +1,22 @@
+require('dotenv').config();
 const express = require('express')
 const app = express()
 const http = require('http')
 const server = http.createServer(app)
-const {Server} = require('socket.io')
-const io = new Server(server)
+const io = require('socket.io')(server, {
+    cors: {
+        origin: process.env.CORS_ORIGIN
+    }
+})
 const cors = require('cors')
 const bodyParser = require('body-parser')
+const socketApp = require('./src/socket/socket.app')
+
 const db = require('./src/models')
 const authRouter = require('./src/routes/auth')
 const initRoleService = require('./src/services/InitRoleService')
+const apiRouter = require('./src/routes/api')
 
-require('dotenv').config();
 
 const port = process.env.PORT || 3001;
 
@@ -32,16 +38,11 @@ app.use(cors())
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-
+socketApp(io);
 
 app.use('/auth', authRouter);
+app.use('/api', apiRouter)
 
-io.on('connection', (socket) => {
-    socket.on('chat message', (msg) => {
-       io.emit('chat message', msg)
-    })
-
-})
 
 server.listen(port, () => {
     console.log(`Server work on http://localhost:${port}`);
