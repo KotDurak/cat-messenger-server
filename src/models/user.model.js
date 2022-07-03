@@ -32,9 +32,17 @@ const User = mongoose.model(
             type: Number,
             default: 0,
         },
+        socket_id: {
+            type: String,
+            index: true
+        },
         roles: [{
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Role'
+        }],
+        contacts: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Chat'
         }]
     })
 )

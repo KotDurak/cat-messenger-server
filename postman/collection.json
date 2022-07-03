@@ -1,6 +1,6 @@
 {
   "info": {
-    "_postman_id": "45890f72-2a5e-4edb-816c-22c75e754baa",
+    "_postman_id": "c669c32a-617e-4eb3-ac20-ad3c6c9b19ef",
     "name": "cat-messenger",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
@@ -63,6 +63,90 @@
           "path": [
             "auth",
             "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Autologin",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "x-access-token",
+            "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYzAxMWMwNzI3NzY5NDJjOGVmZDY3ZiIsImlhdCI6MTY1Njc1NDYyNCwiZXhwIjoxNjU5NDMzMDI0fQ.3NBIo0ue3GGl2uF7p0WKLBcck20lTtdVFl55pnPwk58",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"id\":\"62c011c072776942c8efd67f\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{host}}:3001/auth/autologin",
+          "host": [
+            "{{host}}"
+          ],
+          "port": "3001",
+          "path": [
+            "auth",
+            "autologin"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "New Request",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{host}}:3001/api/contacts/search/62c011c072776942c8efd67f/durak",
+          "host": [
+            "{{host}}"
+          ],
+          "port": "3001",
+          "path": [
+            "api",
+            "contacts",
+            "search",
+            "62c011c072776942c8efd67f",
+            "durak"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Add contact",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"first_user\": \"tigt\",\r\n    \"second_user\": \"skotina\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{host}}:3001/api/create-chat",
+          "host": [
+            "{{host}}"
+          ],
+          "port": "3001",
+          "path": [
+            "api",
+            "create-chat"
           ]
         }
       },

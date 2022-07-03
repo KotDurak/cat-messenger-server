@@ -5,6 +5,13 @@ exports.searchContacts = (req, res) => {
     const userId = req.params.id
     const searchQuery = req.params.query
 
+    if (!searchQuery) {
+        res.send({
+            users: [],
+            message: 'ok'
+        })
+    }
+
     User.find({$and:[
             {
                 $or:[
@@ -27,6 +34,7 @@ exports.searchContacts = (req, res) => {
                   nick: user.nick,
                   gender: user.gender,
                   status: user.status,
+                  type: 'user',
               }
           })
 
