@@ -9,28 +9,24 @@ module.exports = (io) => {
 
 
         socket.on('send_message', async (data) => {
-           const result = await messagesService.sendMessage(
-                data.from,
-                data.to,
-                data.message,
-                data.type,
-            )
+            const findByUser = data.find_by_user || false;
+            let result = null
+            if (findByUser) {
+                 result = await  messagesService.sendByUser(data.from, data.to, data.message);
+            } else {
+                 result = await messagesService.sendMessageToChatRoom(data.from, data.to, data.message)
+            }
 
             User.find({_id: {
-                    $in: [data.from, data.to]
+                    $in: result.chat.users
                 }}).exec((err, users) => {
                     if (err) {
                         throw err
                     }
 
                 users.forEach(user => {
-                         io.to(user.socket_id).emit('newMessage', result);
-
-                       /* const currentSocket = io.sockets.socket[user.socket_id]
-                        if (currentSocket) {
-                            currentSocket.emit('new_message', result)
-                        }*/
-                    })
+                    io.to(user.socket_id).emit('newMessage', result);
+                })
             })
         })
 

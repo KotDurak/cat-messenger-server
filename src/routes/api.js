@@ -1,12 +1,12 @@
 const express = require('express')
 const router = express()
 const contactsController = require('../conrollers/contacts.controllser')
+const messagesController = require('../conrollers/messages.controller')
 
 router.get('/contacts/search/:id/:query', contactsController.searchContacts)
 
-router.post('/create-chat', (req, res) => {
-    console.log(req.body)
-    res.send({message: 'ok'})
-})
+router.get('/load-contacts/:id', contactsController.loadContacts)
+
+router.get('/messages/:id', messagesController.getMessages)
 
 module.exports = router

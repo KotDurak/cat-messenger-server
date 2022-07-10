@@ -1,5 +1,7 @@
 const mongoose = require('mongoose')
 const User = require('../models/user.model')
+const Chat = require('../models/chat.model')
+const loadContatcsService = require('../services/contacts/load.contatcs.service')
 
 exports.searchContacts = (req, res) => {
     const userId = req.params.id
@@ -43,4 +45,11 @@ exports.searchContacts = (req, res) => {
               message: 'Ok'
           })
     })
+}
+
+exports.loadContacts = async (req, res) => {
+    const userId = req.params.id;
+    const chats = await loadContatcsService.getUserContacts(userId);
+
+    res.send({result: chats})
 }

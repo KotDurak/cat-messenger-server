@@ -1,19 +1,11 @@
 const Chat = require('../../models/chat.model')
 const MessageModel =  require('../../models/message.model')
+const mongoose = require('mongoose')
 
 const TYPE_USER = 1;
 const TYPE_GROUP = 2;
 
 class MessagesService {
-    async sendMessage(from, to, message, type = TYPE_USER) {
-        if (type === 'user') {
-            return await this.sendByUser(from, to, message)
-        } else {
-            //TODO Раздел для групповых бесед
-            return null;
-        }
-    }
-
     async sendByUser(from, to, message) {
         const chat = await this.getChatByUsers(from, to);
         const newMessage = await this.addMessageToChat(from, to, message, chat);
@@ -22,7 +14,17 @@ class MessagesService {
             chat,
             message: newMessage
         }
+    }
 
+    async sendMessageToChatRoom(from, chatId, message) {
+        const chat = await Chat.findOne(mongoose.Types.ObjectId(chatId))
+        const to = null
+        const newMessage = await this.addMessageToChat(from, null, message, chat)
+
+        return {
+            chat,
+            message: newMessage
+        }
     }
 
     async getChatByUsers(from, to) {
@@ -36,7 +38,7 @@ class MessagesService {
                     ]
                 }
             ]
-        }).populate('users').exec()
+        }).populate('users', '_id, nick').exec()
 
         if (!chat) {
             chat = new Chat({
@@ -47,6 +49,7 @@ class MessagesService {
             })
 
             chat.save();
+            chat.populate('users', '_id, nick')
         }
 
         return chat;
@@ -63,6 +66,23 @@ class MessagesService {
         return newMessage.save()
     }
 
+
+    async loadMessages(chatId, page = 1, size = 10) {
+        const count =  await MessageModel.countDocuments({chat_id: chatId})
+
+        const messages = await MessageModel.find({
+            chat: chatId
+        }).limit(size)
+            .skip((page - 1) * size)
+            .sort({_id: -1}).exec()
+
+        return  {
+            meta: {
+                count
+            },
+            data: messages
+        }
+    }
 }
 
 module.exports = new MessagesService()
