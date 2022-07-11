@@ -1,6 +1,7 @@
 const Chat = require('../../models/chat.model')
 const MessageModel =  require('../../models/message.model')
 const mongoose = require('mongoose')
+const User = require('../../models/user.model')
 
 const TYPE_USER = 1;
 const TYPE_GROUP = 2;
@@ -9,10 +10,12 @@ class MessagesService {
     async sendByUser(from, to, message) {
         const chat = await this.getChatByUsers(from, to);
         const newMessage = await this.addMessageToChat(from, to, message, chat);
+        const sender = await this.getSenderInfo(from)
 
         return  {
             chat,
-            message: newMessage
+            message: newMessage,
+            sender,
         }
     }
 
@@ -20,10 +23,12 @@ class MessagesService {
         const chat = await Chat.findOne(mongoose.Types.ObjectId(chatId))
         const to = null
         const newMessage = await this.addMessageToChat(from, null, message, chat)
+        const sender = await this.getSenderInfo(from)
 
         return {
             chat,
-            message: newMessage
+            message: newMessage,
+            sender
         }
     }
 
@@ -60,7 +65,7 @@ class MessagesService {
             from: from,
             to: to,
             chat: chat._id,
-            message: message
+            message: message,
         })
 
         return newMessage.save()
@@ -81,6 +86,16 @@ class MessagesService {
                 count
             },
             data: messages
+        }
+    }
+
+    async getSenderInfo(userId) {
+        const user =  await User.findById(mongoose.Types.ObjectId(userId));
+
+        return {
+            id: user._id.toString(),
+            nick: user.nick,
+            gender: user.gender
         }
     }
 }

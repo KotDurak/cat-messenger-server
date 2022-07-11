@@ -101,7 +101,6 @@ exports.autlogin = async (req, res) => {
         if (err) {
             res.status(500).send({message: 'Internal error'})
         }
-        console.log(user)
         res.send({
             message: 'ok',
             user: user

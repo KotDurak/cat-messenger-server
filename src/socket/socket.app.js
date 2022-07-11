@@ -3,10 +3,17 @@ const User = require('../models/user.model')
 
 module.exports = (io) => {
     io.on('connection', (socket) => {
-        socket.on('chat message', (msg) => {
-            io.emit('chat message', msg)
-        })
-
+        const logout = async () => {
+            const user = await User.findOne({socket_id: socket.id})
+            if (user) {
+                user.socket_id = null
+                user.status = 0
+                user.save()
+                socket.broadcast.emit('userDisconnect', {
+                    user_id: user._id
+                });
+            }
+        }
 
         socket.on('send_message', async (data) => {
             const findByUser = data.find_by_user || false;
@@ -34,15 +41,13 @@ module.exports = (io) => {
             const user = await User.findById(data.user_id);
             user.socket_id = socket.id;
             user.save();
+            socket.broadcast.emit('userLogin', {
+                user_id: user._id
+            })
         })
 
-        socket.on('disconnect', async () => {
-            const user = await User.findOne({socket_id: socket.id})
-            if (user) {
-                user.socket_id = null
-                user.status = 0
-                user.save()
-            }
-        })
+        socket.on('user_logout', logout)
+
+        socket.on('disconnect', logout)
     })
 }
