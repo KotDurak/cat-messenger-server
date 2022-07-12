@@ -9,4 +9,6 @@ router.get('/load-contacts/:id', contactsController.loadContacts)
 
 router.get('/messages/:id', messagesController.getMessages)
 
+router.post('/refresh-unread', messagesController.refreshUnread)
+
 module.exports = router

@@ -26,6 +26,10 @@ const Chat = mongoose.model(
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User',
             index: true
+        },
+        unread: {
+            type: Map,
+            of: Number
         }
     })
 )

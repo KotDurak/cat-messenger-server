@@ -11,7 +11,7 @@ class MessagesService {
         const chat = await this.getChatByUsers(from, to);
         const newMessage = await this.addMessageToChat(from, to, message, chat);
         const sender = await this.getSenderInfo(from)
-
+        this.incrementUnread(chat, from)
         return  {
             chat,
             message: newMessage,
@@ -20,10 +20,11 @@ class MessagesService {
     }
 
     async sendMessageToChatRoom(from, chatId, message) {
-        const chat = await Chat.findOne(mongoose.Types.ObjectId(chatId))
+        const chat = await Chat.findById(mongoose.Types.ObjectId(chatId))
         const to = null
         const newMessage = await this.addMessageToChat(from, null, message, chat)
         const sender = await this.getSenderInfo(from)
+        this.incrementUnread(chat, from)
 
         return {
             chat,
@@ -97,6 +98,22 @@ class MessagesService {
             nick: user.nick,
             gender: user.gender
         }
+    }
+
+    incrementUnread(chat, from) {
+        const unread = chat.unread || new Map()
+
+        chat.users.forEach(user => {
+            const userKeyString = user.toString()
+            if (userKeyString != from) {
+                const count = unread.get(userKeyString) || 0
+
+                unread.set(userKeyString, count + 1)
+            }
+        })
+
+        chat.unread = unread;
+        chat.save();
     }
 }
 
