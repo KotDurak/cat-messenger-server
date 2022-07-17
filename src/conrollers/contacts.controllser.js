@@ -2,6 +2,8 @@ const mongoose = require('mongoose')
 const User = require('../models/user.model')
 const Chat = require('../models/chat.model')
 const loadContatcsService = require('../services/contacts/load.contatcs.service')
+const removeChatService = require('../services/contacts/remove.chat.service')
+const searchChatService = require('../services/chat/search.chat.service')
 
 exports.searchContacts = (req, res) => {
     const userId = req.params.id
@@ -52,4 +54,28 @@ exports.loadContacts = async (req, res) => {
     const chats = await loadContatcsService.getUserContacts(userId);
 
     res.send({result: chats})
+}
+
+exports.deleteContact = async (req, res) => {
+    const userId = req.userId
+    const chatId = req.params.id
+    const deletedChat = await removeChatService.removeChat(userId, chatId)
+
+    res.send({
+        chatId: chatId
+    })
+}
+
+exports.searchDeleted = async (req, res) => {
+    const chat = await searchChatService.getDeletedChatByUsers([req.userId, req.params.id])
+
+    if (chat) {
+        return res.send({
+            id: chat._id.toString()
+        })
+    }
+
+    res.send({
+        id: null
+    });
 }

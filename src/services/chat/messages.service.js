@@ -19,8 +19,17 @@ class MessagesService {
         }
     }
 
-    async sendMessageToChatRoom(from, chatId, message) {
-        const chat = await Chat.findById(mongoose.Types.ObjectId(chatId))
+    async sendMessageToChatRoom(from, chatId, message, restoreBySend) {
+
+        const  chat = await Chat.findOneWithDeleted({_id: mongoose.Types.ObjectId(chatId)})
+        if (chat.deleted) {
+            if (restoreBySend) {
+                chat.restore()
+            } else {
+                return null
+            }
+        }
+
         const to = null
         const newMessage = await this.addMessageToChat(from, null, message, chat)
         const sender = await this.getSenderInfo(from)

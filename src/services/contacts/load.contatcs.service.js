@@ -4,13 +4,23 @@ class LoadContatcsService {
      async getUserContacts(userId) {
         const chats = await Chat.find({
             $or:[{first_user: userId}, {second_user: userId}]
-        }).populate('users', '_id, nick').exec();
+        }).populate('users');
 
         const result = [];
 
         for (let i = 0; i < chats.length; i++) {
             const chat = chats[i]
-            const chatName = this.isUserChat(chat.type) ? this.getUserNameByChat(chat.users, userId) : chat.name
+            let chatName = ''
+            let online = true
+            let user_id = null
+
+            if (this.isUserChat(chat.type)) {
+                const chatUser = this.getChatUser(chat.users, userId)
+                chatName = chatUser.nick
+                online = chatUser.status == 1
+                user_id = chatUser._id.toString()
+            }
+
             let unread = 0;
             if (chat.unread) {
                 unread = chat.unread.get(userId) || 0
@@ -20,7 +30,9 @@ class LoadContatcsService {
                 id: chat._id,
                 name: chatName,
                 type: chat.type,
-                unread: unread
+                unread: unread,
+                online: online,
+                user_id: user_id
             };
 
             result.push(contactObj)
@@ -37,6 +49,16 @@ class LoadContatcsService {
 
     isUserChat(type) {
          return type === 1;
+    }
+
+    getChatUser(users, userId) {
+         const user = users.find(user => user._id.toString() !== userId)
+
+        return user
+    }
+
+    getStatus() {
+
     }
 }
 

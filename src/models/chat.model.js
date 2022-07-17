@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const mongooseDelete = require('mongoose-delete')
 
 const Chat = mongoose.model(
     'Chat',
@@ -31,7 +32,7 @@ const Chat = mongoose.model(
             type: Map,
             of: Number
         }
-    })
+    }).plugin(mongooseDelete, { overrideMethods: true })
 )
 
 module.exports = Chat

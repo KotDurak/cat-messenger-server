@@ -21,7 +21,15 @@ module.exports = (io) => {
             if (findByUser) {
                  result = await  messagesService.sendByUser(data.from, data.to, data.message);
             } else {
-                 result = await messagesService.sendMessageToChatRoom(data.from, data.to, data.message)
+                 result = await messagesService.sendMessageToChatRoom(data.from,
+                     data.to,
+                     data.message,
+                     data.restore_by_send
+                 )
+            }
+
+            if (!result) {
+                return
             }
 
             User.find({_id: {

@@ -103,12 +103,12 @@
       "response": []
     },
     {
-      "name": "New Request",
+      "name": "Search contacts",
       "request": {
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "{{host}}:3001/api/contacts/search/62c011c072776942c8efd67f/durak",
+          "raw": "{{host}}:3001/api/contacts/search/62c011c072776942c8efd67f/tigr",
           "host": [
             "{{host}}"
           ],
@@ -118,7 +118,91 @@
             "contacts",
             "search",
             "62c011c072776942c8efd67f",
-            "durak"
+            "tigr"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Search deleted chat",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "x-access-token",
+            "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYzAxMWMwNzI3NzY5NDJjOGVmZDY3ZiIsImlhdCI6MTY1Nzg5ODMwNywiZXhwIjoxNjYwNTc2NzA3fQ.pd5TtuCdy2_NpYBPqpNsGnreEei7fCKIbYnFGluG7Lc",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{host}}:3001/api/contacts/search-delete/62c8629193ee9d559fc17607",
+          "host": [
+            "{{host}}"
+          ],
+          "port": "3001",
+          "path": [
+            "api",
+            "contacts",
+            "search-delete",
+            "62c8629193ee9d559fc17607"
+          ],
+          "query": [
+            {
+              "key": "x-access-token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYzAxMWMwNzI3NzY5NDJjOGVmZDY3ZiIsImlhdCI6MTY1Nzg5ODMwNywiZXhwIjoxNjYwNTc2NzA3fQ.pd5TtuCdy2_NpYBPqpNsGnreEei7fCKIbYnFGluG7Lc",
+              "disabled": true
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Load contacts",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{host}}:3001/api/load-contacts/62c011c072776942c8efd67f",
+          "host": [
+            "{{host}}"
+          ],
+          "port": "3001",
+          "path": [
+            "api",
+            "load-contacts",
+            "62c011c072776942c8efd67f"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Load messages",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{host}}:3001/api/messages/62cace828629399feca8d30a?page=1&size=10",
+          "host": [
+            "{{host}}"
+          ],
+          "port": "3001",
+          "path": [
+            "api",
+            "messages",
+            "62cace828629399feca8d30a"
+          ],
+          "query": [
+            {
+              "key": "page",
+              "value": "1"
+            },
+            {
+              "key": "size",
+              "value": "10"
+            }
           ]
         }
       },
@@ -147,6 +231,69 @@
           "path": [
             "api",
             "create-chat"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "refresh-unread",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"chat_id\": \"62cc633a561f60333f204006\",\r\n    \"user_id\": \"62c011c072776942c8efd67f\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{host}}:3001/api/refresh-unread",
+          "host": [
+            "{{host}}"
+          ],
+          "port": "3001",
+          "path": [
+            "api",
+            "refresh-unread"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "remove chat",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "x-access-token",
+            "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYzAxMWMwNzI3NzY5NDJjOGVmZDY3ZiIsImlhdCI6MTY1Nzg5ODMwNywiZXhwIjoxNjYwNTc2NzA3fQ.pd5TtuCdy2_NpYBPqpNsGnreEei7fCKIbYnFGluG7Lc",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"chat_id\": \"62cc633a561f60333f204006\",\r\n    \"user_id\": \"62c011c072776942c8efd67f\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{host}}:3001/api/contacts/62cdb6680948d96239ff72e9",
+          "host": [
+            "{{host}}"
+          ],
+          "port": "3001",
+          "path": [
+            "api",
+            "contacts",
+            "62cdb6680948d96239ff72e9"
           ]
         }
       },
