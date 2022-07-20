@@ -113,7 +113,7 @@ class MessagesService {
         const unread = chat.unread || new Map()
 
         chat.users.forEach(user => {
-            const userKeyString = user.toString()
+            const userKeyString = user._id.toString()
             if (userKeyString != from) {
                 const count = unread.get(userKeyString) || 0
 
