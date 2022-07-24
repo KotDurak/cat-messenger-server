@@ -40,7 +40,11 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 socketApp(io);
 
-exports.sockets = io
+
+app.use((req, res, next) => {
+    req.io = io
+    next()
+})
 
 app.use('/auth', authRouter);
 app.use('/api', apiRouter)

@@ -16,5 +16,6 @@ router.get('/messages/:id', messagesController.getMessages)
 
 router.post('/refresh-unread', messagesController.refreshUnread)
 
+router.put('/contacts/add-black-list/:id', authJwt.verifyToken, contactsController.addBlackList)
 
 module.exports = router

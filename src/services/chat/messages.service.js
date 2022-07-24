@@ -83,8 +83,7 @@ class MessagesService {
 
 
     async loadMessages(chatId, page = 1, size = 10) {
-        const count =  await MessageModel.countDocuments({chat_id: chatId})
-
+        const count =  await MessageModel.countDocuments({chat: chatId})
         const messages = await MessageModel.find({
             chat: chatId
         }).limit(size)

@@ -40,7 +40,7 @@ const User = mongoose.model(
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Role'
         }],
-        contacts: [{
+        black_list: [{
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Chat'
         }]

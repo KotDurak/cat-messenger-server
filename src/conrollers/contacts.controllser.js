@@ -4,6 +4,7 @@ const Chat = require('../models/chat.model')
 const loadContatcsService = require('../services/contacts/load.contatcs.service')
 const removeChatService = require('../services/contacts/remove.chat.service')
 const searchChatService = require('../services/chat/search.chat.service')
+const blackListService = require('../services/contacts/black.list.service')
 
 exports.searchContacts = (req, res) => {
     const userId = req.params.id
@@ -78,4 +79,25 @@ exports.searchDeleted = async (req, res) => {
     res.send({
         id: null
     });
+}
+
+exports.addBlackList = async (req, res) => {
+    const id = req.params.id
+    blackListService.addUserBlackList(req.userId, id)
+    const chat = await searchChatService.findNotDeletedChat([req.userId, id])
+    if (chat) {
+        removeChatService.removeChat(req.userId, chat._id.toString())
+    }
+
+    const user = await User.findById(id)
+
+    if (user) {
+        req.io.to(user.socket_id).emit('deleteChat', {sender_id: req.userId})
+    }
+
+
+
+    res.send({
+        message: 'OK'
+    })
 }

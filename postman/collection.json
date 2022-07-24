@@ -164,7 +164,7 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "{{host}}:3001/api/load-contacts/62c011c072776942c8efd67f",
+          "raw": "{{host}}:3001/api/load-contacts/62c8629193ee9d559fc17607",
           "host": [
             "{{host}}"
           ],
@@ -172,7 +172,7 @@
           "path": [
             "api",
             "load-contacts",
-            "62c011c072776942c8efd67f"
+            "62c8629193ee9d559fc17607"
           ]
         }
       },
@@ -294,6 +294,33 @@
             "api",
             "contacts",
             "62cdb6680948d96239ff72e9"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Add User To Black List",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "x-access-token",
+            "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYzAxMWMwNzI3NzY5NDJjOGVmZDY3ZiIsImlhdCI6MTY1Nzg5ODMwNywiZXhwIjoxNjYwNTc2NzA3fQ.pd5TtuCdy2_NpYBPqpNsGnreEei7fCKIbYnFGluG7Lc",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{host}}:3001/api/contacts/add-black-list/62c8629193ee9d559fc17607",
+          "host": [
+            "{{host}}"
+          ],
+          "port": "3001",
+          "path": [
+            "api",
+            "contacts",
+            "add-black-list",
+            "62c8629193ee9d559fc17607"
           ]
         }
       },
