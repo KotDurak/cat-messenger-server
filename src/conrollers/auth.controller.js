@@ -61,10 +61,12 @@ exports.signin = (req, res) => {
             const passwordIsValid = await bcrypt.compare(req.body.password, user.password)
 
             if (!passwordIsValid) {
-               return res.status(401).send({
+                res.status(401).send({
                     accessToken: null,
                     message: 'Invalid password'
                 })
+
+                return
             }
 
             const token = jwt.sign({id: user.id}, config.secret, {

@@ -18,4 +18,6 @@ router.post('/refresh-unread', messagesController.refreshUnread)
 
 router.put('/contacts/add-black-list/:id', authJwt.verifyToken, contactsController.addBlackList)
 
+router.delete('/contacts/remove-black-list/:id', authJwt.verifyToken, contactsController.removeBlackList)
+
 module.exports = router

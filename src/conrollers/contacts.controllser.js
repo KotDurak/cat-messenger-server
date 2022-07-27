@@ -6,15 +6,18 @@ const removeChatService = require('../services/contacts/remove.chat.service')
 const searchChatService = require('../services/chat/search.chat.service')
 const blackListService = require('../services/contacts/black.list.service')
 
-exports.searchContacts = (req, res) => {
+exports.searchContacts = async (req, res) => {
     const userId = req.params.id
     const searchQuery = req.params.query
+    const sender = await User.findById(userId)
 
     if (!searchQuery) {
         res.send({
             users: [],
             message: 'ok'
         })
+
+        return
     }
 
     User.find({$and:[
@@ -33,20 +36,22 @@ exports.searchContacts = (req, res) => {
             return
         }
 
-          const users = result.map(user => {
-              return {
-                  id: user._id,
-                  nick: user.nick,
-                  gender: user.gender,
-                  status: user.status,
-                  type: 'user',
-              }
-          })
+        const blackList = sender.black_list || []
+        const users = result.map(user => {
+            return {
+                id: user._id,
+                nick: user.nick,
+                gender: user.gender,
+                status: user.status,
+                type: 'user',
+                in_black_list: blackList.includes(user._id)
+            }
+        })
 
-          res.send({
-              users: users,
-              message: 'Ok'
-          })
+        res.send({
+            users: users,
+            message: 'Ok'
+        })
     })
 }
 
@@ -100,4 +105,21 @@ exports.addBlackList = async (req, res) => {
     res.send({
         message: 'OK'
     })
+}
+
+exports.removeBlackList = async (req, res) => {
+    const id = req.params.id
+    const user = await User.findById(req.userId)
+    const blackList = user.black_list || []
+    console.log(id)
+    user.black_list = blackList.filter(userId => {
+      return userId.toString() !== id
+    })
+
+    const saved =  await user.save()
+    if (saved) {
+        res.send({message: 'OK'})
+    } else {
+        res.status(500).send({message: 'Error'})
+    }
 }
