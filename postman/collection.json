@@ -1,6 +1,6 @@
 {
   "info": {
-    "_postman_id": "c669c32a-617e-4eb3-ac20-ad3c6c9b19ef",
+    "_postman_id": "2e8010ec-a4d2-4179-9972-fc59c6929eae",
     "name": "cat-messenger",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
@@ -108,7 +108,7 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "{{host}}:3001/api/contacts/search/62c011c072776942c8efd67f/tigr",
+          "raw": "{{host}}:3001/api/contacts/search/62bc96bf3f9df9d17471378c/tigr",
           "host": [
             "{{host}}"
           ],
@@ -117,7 +117,7 @@
             "api",
             "contacts",
             "search",
-            "62c011c072776942c8efd67f",
+            "62bc96bf3f9df9d17471378c",
             "tigr"
           ]
         }
@@ -321,6 +321,33 @@
             "contacts",
             "add-black-list",
             "62c8629193ee9d559fc17607"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Remove from black list",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "x-access-token",
+            "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYmM5NmJmM2Y5ZGY5ZDE3NDcxMzc4YyIsImlhdCI6MTY1NjUzMjE2MiwiZXhwIjoxNjU5MjEwNTYyfQ.x7GGPDCA-PLQC26jxTf8E_NZ3jXUm_4LkinSnTIs12c",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{host}}:3001/api/contacts/remove-black-list/62d82b53dbfd9b4faca27758",
+          "host": [
+            "{{host}}"
+          ],
+          "port": "3001",
+          "path": [
+            "api",
+            "contacts",
+            "remove-black-list",
+            "62d82b53dbfd9b4faca27758"
           ]
         }
       },
