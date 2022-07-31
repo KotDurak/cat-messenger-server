@@ -8,6 +8,7 @@ router.get('/contacts/search/:id/:query', contactsController.searchContacts)
 
 router.get('/load-contacts/:id', contactsController.loadContacts)
 
+router.get('/contacts/:id', contactsController.getUserInfo)
 router.delete('/contacts/:id', authJwt.verifyToken, contactsController.deleteContact)
 
 router.get('/contacts/search-delete/:id', authJwt.verifyToken, contactsController.searchDeleted)

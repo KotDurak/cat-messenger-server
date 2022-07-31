@@ -44,6 +44,10 @@ module.exports = (io) => {
                 )
             }
 
+            if (!result) {
+                return
+            }
+
             User.find({_id: {
                     $in: result.chat.users
                 }}).exec((err, users) => {

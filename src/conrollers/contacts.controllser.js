@@ -111,7 +111,6 @@ exports.removeBlackList = async (req, res) => {
     const id = req.params.id
     const user = await User.findById(req.userId)
     const blackList = user.black_list || []
-    console.log(id)
     user.black_list = blackList.filter(userId => {
       return userId.toString() !== id
     })
@@ -122,4 +121,23 @@ exports.removeBlackList = async (req, res) => {
     } else {
         res.status(500).send({message: 'Error'})
     }
+}
+
+exports.getUserInfo = async (req, res) => {
+    const id = req.params.id
+    const user = await User.findById(id)
+
+    if (!user) {
+        res.status(404).send({})
+    }
+
+    const data = {
+        id: user._id.toString(),
+        nick: user.nick,
+        email: user.email,
+        gender: user.gender,
+    }
+
+    res.send(data)
+
 }

@@ -32,12 +32,19 @@ class CheckBlackList {
 
     async checkForUser(sender, toUser) {
         const user = await User.findById(toUser)
+        const senderUser = await User.findById(sender)
 
         if (!user.black_list) {
-            return true
+            return  {
+                can_message: true,
+                message: false
+            }
         }
 
-        if (user.black_list.indexOf(sender) === -1) {
+
+        const addresseeInBlackList = senderUser.black_list && senderUser.black_list.indexOf(toUser) !== -1;
+        const senderInBlackList = user.black_list && user.black_list.indexOf(sender) !== -1;
+        if (!addresseeInBlackList && !senderInBlackList) {
             return  {
                 can_message: true,
                 message: false

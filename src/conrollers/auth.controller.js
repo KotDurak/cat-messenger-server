@@ -7,7 +7,6 @@ const bcrypt = require('bcryptjs')
 
 exports.signup = async (req, res) => {
     const password = await bcrypt.hash(req.body.password, 8)
-    console.log(password)
     const user = new User({
         email: req.body.email,
         nick: req.body.nick,
