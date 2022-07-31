@@ -1,6 +1,6 @@
 {
   "info": {
-    "_postman_id": "2e8010ec-a4d2-4179-9972-fc59c6929eae",
+    "_postman_id": "b0cd303d-420c-4a3f-82ca-702382a07b46",
     "name": "cat-messenger",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
@@ -184,7 +184,7 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "{{host}}:3001/api/messages/62cace828629399feca8d30a?page=1&size=10",
+          "raw": "{{host}}:3001/api/messages/62cdb6680948d96239ff72e9?page=1&size=10",
           "host": [
             "{{host}}"
           ],
@@ -192,7 +192,7 @@
           "path": [
             "api",
             "messages",
-            "62cace828629399feca8d30a"
+            "62cdb6680948d96239ff72e9"
           ],
           "query": [
             {
@@ -294,6 +294,44 @@
             "api",
             "contacts",
             "62cdb6680948d96239ff72e9"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get user info",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "x-access-token",
+            "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYzAxMWMwNzI3NzY5NDJjOGVmZDY3ZiIsImlhdCI6MTY1Nzg5ODMwNywiZXhwIjoxNjYwNTc2NzA3fQ.pd5TtuCdy2_NpYBPqpNsGnreEei7fCKIbYnFGluG7Lc",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"chat_id\": \"62cc633a561f60333f204006\",\r\n    \"user_id\": \"62c011c072776942c8efd67f\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{host}}:3001/api/contacts/62c041d2f7fd014320dcd0d8",
+          "host": [
+            "{{host}}"
+          ],
+          "port": "3001",
+          "path": [
+            "api",
+            "contacts",
+            "62c041d2f7fd014320dcd0d8"
           ]
         }
       },
