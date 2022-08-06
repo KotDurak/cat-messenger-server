@@ -11,7 +11,7 @@ exports.signup = async (req, res) => {
         email: req.body.email,
         nick: req.body.nick,
         password: password,
-        birthday: req.body.birth_day,
+        birth_day: req.body.birth_day,
         gender: req.body.gender
     });
 
@@ -106,8 +106,5 @@ exports.autlogin = async (req, res) => {
             message: 'ok',
             user: user
         })
-
     })
-
-
 }

@@ -5,14 +5,14 @@ const User = db.user
 checkDuplicateNickOrNick = (req, res, next) => {
 
     User.findOne({
-        $or: [{nick: req.body.name}, {email: req.body.email}]
+        $or: [{nick: req.body.nick}, {email: req.body.email}]
     }).exec((err, user) => {
         if (err) {
             res.status(500).send({ message: err });
             return;
         }
         if (user) {
-            res.status(400).send({ message: "Failed! Username is already in use!" });
+            res.status(400).send({ message: "Ник или email уже используются!" });
             return
         }
 
