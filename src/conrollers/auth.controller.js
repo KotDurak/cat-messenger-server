@@ -50,11 +50,12 @@ exports.signin = (req, res) => {
                 return
             }
             if (!user) {
-                return res.status(404).send({ message: "User Not found." })
+                return res.status(404).send({ message: 'Неверный логин или пароль'})
             }
 
             if (!req.body.password) {
-                res.status(400).send({message: 'Empty password'})
+                res.status(400).send({message: 'Заполните пароль'})
+                return
             }
 
             const passwordIsValid = await bcrypt.compare(req.body.password, user.password)
@@ -62,7 +63,7 @@ exports.signin = (req, res) => {
             if (!passwordIsValid) {
                 res.status(401).send({
                     accessToken: null,
-                    message: 'Invalid password'
+                    message: 'Неверный логин или пароль'
                 })
 
                 return
