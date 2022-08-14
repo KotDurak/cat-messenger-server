@@ -20,7 +20,7 @@ exports.refreshUnread = async (req, res) => {
     const {chat_id, user_id} = req.body
 
     try {
-        refreshUnreadService.refresh(chat_id, user_id)
+        refreshUnreadService.refresh(chat_id, user_id, req.io)
         res.status(200).send({
             message: 'OK',
             code: 0
